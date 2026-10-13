@@ -1,0 +1,182 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://landslide-ewp.org/contracts/queue_item.schema.json",
+  "title": "QueueItem",
+  "description": "Output item from Phase 1 macro-risk screening representing a prioritised slope unit.",
+  "type": "object",
+  "required": [
+    "slope_unit_id",
+    "run_id",
+    "process",
+    "scores",
+    "deformation",
+    "data_status",
+    "unknown_reasons",
+    "runout",
+    "lane",
+    "priority_rank"
+  ],
+  "properties": {
+    "slope_unit_id": {
+      "type": "string",
+      "pattern": "^SU-[A-Za-z0-9_]+-[0-9]+$",
+      "description": "Unique identifier for the slope unit, e.g., SU-R01-000123"
+    },
+    "run_id": {
+      "type": "string",
+      "pattern": "^p1-[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}(:[0-9]{2})?Z?$",
+      "description": "Lineage run ID, e.g., p1-2026-10-10T00:00Z"
+    },
+    "process": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["shallow_debris", "rockfall", "deep_seated", "debris_flow"]
+      },
+      "minItems": 1,
+      "description": "Landslide process classes active or assessed for this unit"
+    },
+    "scores": {
+      "type": "object",
+      "required": [
+        "susceptibility",
+        "hazard",
+        "exposure",
+        "vulnerability",
+        "risk",
+        "risk_interval"
+      ],
+      "properties": {
+        "susceptibility": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "description": "Calibrated static spatial likelihood S"
+        },
+        "hazard": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "description": "Hazard score H incorporating active deformation"
+        },
+        "exposure": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "description": "Normalised exposure score E within unit and runout footprint"
+        },
+        "vulnerability": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "description": "Class vulnerability factor V (default 1.0)"
+        },
+        "risk": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "description": "Risk R = H x E x V used strictly for queue ranking"
+        },
+        "risk_interval": {
+          "type": "array",
+          "items": {
+            "type": "number",
+            "minimum": 0.0,
+            "maximum": 1.0
+          },
+          "minItems": 2,
+          "maxItems": 2,
+          "description": "Uncertainty bounds [r_lo, r_hi]"
+        }
+      },
+      "additionalProperties": false
+    },
+    "deformation": {
+      "type": "object",
+      "required": [
+        "status",
+        "coverage_pct",
+        "v_downslope_mm_yr",
+        "v_sigma_mm_yr",
+        "ada"
+      ],
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": ["OK", "DEGRADED", "UNKNOWN"],
+          "description": "InSAR deformation data status"
+        },
+        "coverage_pct": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 100.0,
+          "description": "Spatial percentage of slope unit with coherent InSAR coverage"
+        },
+        "v_downslope_mm_yr": {
+          "type": "number",
+          "description": "Downslope projected velocity in mm/yr (negative indicates downslope motion)"
+        },
+        "v_sigma_mm_yr": {
+          "type": "number",
+          "minimum": 0.0,
+          "description": "Velocity standard error / 1-sigma in mm/yr"
+        },
+        "ada": {
+          "type": "boolean",
+          "description": "True if an Active Deformation Area cluster is detected in the unit"
+        }
+      },
+      "additionalProperties": false
+    },
+    "data_status": {
+      "type": "string",
+      "enum": ["OK", "DEGRADED", "UNKNOWN"],
+      "description": "Overall data status: worst quality across critical features"
+    },
+    "unknown_reasons": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "List of explicit reason codes explaining UNKNOWN or DEGRADED status"
+    },
+    "runout": {
+      "type": "object",
+      "required": [
+        "inherited_from",
+        "footprint_id"
+      ],
+      "properties": {
+        "inherited_from": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Slope units uphill whose runout enters this unit"
+        },
+        "footprint_id": {
+          "type": ["string", "null"],
+          "description": "Identifier of the associated runout footprint polygon"
+        }
+      },
+      "additionalProperties": false
+    },
+    "lane": {
+      "type": "string",
+      "enum": [
+        "INSTRUMENT",
+        "DRONE_BASELINE",
+        "RESCREEN",
+        "AUDIT",
+        "NONE"
+      ],
+      "description": "Priority queue lane assignment"
+    },
+    "priority_rank": {
+      "type": ["integer", "null"],
+      "minimum": 1,
+      "description": "Ordinal priority ranking within assigned lane or overall queue (null for NONE)"
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,85 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://landslide-ewp.org/contracts/regional_advisory.schema.json",
+  "title": "RegionalAdvisory",
+  "description": "Regional rainfall-driven advisory candidate message emitted by Phase 1 for Phase 3 review.",
+  "type": "object",
+  "required": [
+    "advisory_id",
+    "region_id",
+    "created_at",
+    "level",
+    "matrix_cell",
+    "susceptibility_class",
+    "rain_class",
+    "rainfall_summary",
+    "recommended_actions"
+  ],
+  "properties": {
+    "advisory_id": {
+      "type": "string",
+      "pattern": "^ADV-[0-9]{4}-[0-9]{2}-[0-9]{2}-[A-Za-z0-9_]+$",
+      "description": "Unique identifier for the advisory candidate"
+    },
+    "region_id": {
+      "type": "string",
+      "description": "Region identifier, e.g., R01"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 UTC creation timestamp"
+    },
+    "level": {
+      "type": "string",
+      "enum": ["NONE", "ADVISORY", "WARNING_CANDIDATE"],
+      "description": "Proposed advisory level from regional matrix"
+    },
+    "matrix_cell": {
+      "type": "string",
+      "description": "Matrix cell identifier, e.g. HIGH_EXCEEDED"
+    },
+    "susceptibility_class": {
+      "type": "string",
+      "enum": ["LOW", "MODERATE", "HIGH", "VERY_HIGH"]
+    },
+    "rain_class": {
+      "type": "string",
+      "enum": ["NORMAL", "WATCH", "EXCEEDED", "EXTREME"]
+    },
+    "rainfall_summary": {
+      "type": "object",
+      "required": ["api_mm", "max_intensity_mm_h", "duration_h", "id_exceedance_ratio"],
+      "properties": {
+        "api_mm": {
+          "type": "number",
+          "description": "Antecedent Precipitation Index in mm"
+        },
+        "max_intensity_mm_h": {
+          "type": "number",
+          "description": "Peak hourly rainfall intensity"
+        },
+        "duration_h": {
+          "type": "number",
+          "description": "Event duration in hours"
+        },
+        "id_exceedance_ratio": {
+          "type": "number",
+          "description": "Ratio of observed intensity to I-D threshold intensity"
+        }
+      },
+      "additionalProperties": false
+    },
+    "affected_units_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "recommended_actions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "additionalProperties": false
+}

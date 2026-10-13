@@ -1,0 +1,104 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://landslide-ewp.org/contracts/breach_event.schema.json",
+  "title": "BreachEvent",
+  "description": "Critical breach event payload emitted by Phase 2A in-situ early warning engine to Phase 3 governance plane.",
+  "type": "object",
+  "required": [
+    "event_id",
+    "site_id",
+    "created_at",
+    "proposed_level",
+    "triggers",
+    "ivm",
+    "rain_context",
+    "monitoring_status",
+    "evidence_url"
+  ],
+  "properties": {
+    "event_id": {
+      "type": "string",
+      "description": "Unique UUID for the breach event episode"
+    },
+    "site_id": {
+      "type": "string",
+      "pattern": "^SITE-[0-9]{4,}$",
+      "description": "Unique site identifier"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 UTC creation timestamp"
+    },
+    "proposed_level": {
+      "type": "string",
+      "enum": ["ADVISORY", "WARNING", "CRITICAL"],
+      "description": "Proposed early-warning TARP escalation level"
+    },
+    "triggers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["rule", "sensor_id", "value", "unit", "threshold_version"],
+        "properties": {
+          "rule": { "type": "string" },
+          "sensor_id": { "type": "string" },
+          "value": { "type": "number" },
+          "unit": { "type": "string" },
+          "threshold_version": { "type": "string" }
+        },
+        "additionalProperties": false
+      },
+      "minItems": 1,
+      "description": "List of active triggers causing the breach"
+    },
+    "ivm": {
+      "type": "object",
+      "required": ["status"],
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": ["VALID", "NOT_ACCELERATING", "NO_CONVERGENCE", "BELOW_NOISE_FLOOR", "RAIN_PULSE"]
+        },
+        "tf_window_utc": {
+          "type": "array",
+          "items": { "type": "string", "format": "date-time" },
+          "minItems": 2,
+          "maxItems": 2,
+          "description": "Estimated failure time interval (lower and upper percentiles)"
+        },
+        "validity": {
+          "type": "string",
+          "enum": ["LOW", "MEDIUM", "HIGH"]
+        },
+        "flags": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      },
+      "additionalProperties": false
+    },
+    "rain_context": {
+      "type": "object",
+      "required": ["id_class", "api_mm"],
+      "properties": {
+        "id_class": {
+          "type": "string",
+          "enum": ["NORMAL", "WATCH", "EXCEEDED", "EXTREME"]
+        },
+        "api_mm": { "type": "number" }
+      },
+      "additionalProperties": false
+    },
+    "monitoring_status": {
+      "type": "string",
+      "enum": ["NOMINAL", "DEGRADED", "BLIND"],
+      "description": "Overall site sensor health status"
+    },
+    "evidence_url": {
+      "type": "string",
+      "description": "Direct URL or URI to the detailed evidence bundle"
+    }
+  },
+  "additionalProperties": false
+}

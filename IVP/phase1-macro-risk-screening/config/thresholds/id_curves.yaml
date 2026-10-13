@@ -1,0 +1,37 @@
+version: "2026-10-v1"
+priors:
+  caine1980:
+    alpha: 14.82
+    beta: 0.39
+    duration_min_h: 0.1
+    duration_max_h: 1000.0
+    description: "Caine (1980) global empirical threshold for shallow landslides and debris flows: I = 14.82 * D^(-0.39)"
+  guzzetti2008:
+    alpha: 2.20
+    beta: 0.44
+    duration_min_h: 1.0
+    duration_max_h: 100.0
+    description: "Guzzetti et al. (2008) global threshold"
+
+zones:
+  - zone_id: "ZONE_R01_ALPINE"
+    name: "High Relief Alpine / Mountain"
+    alpha: 11.50
+    beta: 0.42
+    watch_multiplier: 0.65
+    extreme_multiplier: 1.50
+    calibrated: true
+    source: "Local historical inventory calibration 2010-2025"
+  - zone_id: "ZONE_R01_FOOTHILL"
+    name: "Foothills and Sedimentary Plateau"
+    alpha: 16.20
+    beta: 0.38
+    watch_multiplier: 0.70
+    extreme_multiplier: 1.60
+    calibrated: true
+    source: "Local historical inventory calibration 2010-2025"
+
+api_parameters:
+  window_days: 14
+  decay_factor: 0.85
+  exceedance_threshold_mm: 150.0

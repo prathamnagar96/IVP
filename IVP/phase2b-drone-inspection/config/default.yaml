@@ -1,0 +1,15 @@
+missions:
+  cadence:
+    BASELINE: once
+    PERIODIC: null
+    EVENT: on_trigger
+planning:
+  min_clearance_m: null
+  weather_limits:
+    wind_ms: null
+    gust_ms: null
+    visibility_m: null
+qc:
+  coverage_pct: 98
+  ground_density_ppm2: null
+  lod95_target_m: null

@@ -1,0 +1,93 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://landslide-ewp.org/contracts/drone_product.schema.json",
+  "title": "DroneProduct",
+  "description": "STAC Item representation of targeted drone inspection products from Phase 2B.",
+  "type": "object",
+  "required": [
+    "type",
+    "stac_version",
+    "id",
+    "properties",
+    "assets"
+  ],
+  "properties": {
+    "type": {
+      "type": "string",
+      "const": "Feature"
+    },
+    "stac_version": {
+      "type": "string",
+      "const": "1.0.0"
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9_-]+$",
+      "description": "Standardized STAC item ID, e.g. SITE-0007_2026-10-02_lidar"
+    },
+    "geometry": {
+      "type": ["object", "null"],
+      "description": "GeoJSON geometry of mission flight footprint"
+    },
+    "bbox": {
+      "type": "array",
+      "items": { "type": "number" },
+      "minItems": 4,
+      "maxItems": 6
+    },
+    "properties": {
+      "type": "object",
+      "required": [
+        "datetime",
+        "mission_type",
+        "ground_density_ppm2",
+        "reg_rmse_m",
+        "lod95_m",
+        "qc_status"
+      ],
+      "properties": {
+        "datetime": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "mission_type": {
+          "type": "string",
+          "enum": ["BASELINE", "PERIODIC", "EVENT", "RESCREEN"]
+        },
+        "ground_density_ppm2": {
+          "type": "number",
+          "minimum": 0.0,
+          "description": "Ground point density in points per square meter"
+        },
+        "reg_rmse_m": {
+          "type": "number",
+          "minimum": 0.0,
+          "description": "Stable-area co-registration RMSE in meters"
+        },
+        "lod95_m": {
+          "type": "number",
+          "minimum": 0.0,
+          "description": "95% Level of Detection in meters: 1.96 * sqrt(s1^2 + s2^2)"
+        },
+        "qc_status": {
+          "type": "string",
+          "enum": ["PASS", "WARN", "FAIL"],
+          "description": "Automated quality gate verdict"
+        },
+        "volume_change_m3": {
+          "type": "number",
+          "description": "Total volume change computed strictly above LoD95"
+        }
+      },
+      "additionalProperties": true
+    },
+    "assets": {
+      "type": "object",
+      "description": "Dictionary of geospatial asset files (COG, COPC, GeoPackage)",
+      "additionalProperties": {
+        "type": ["string", "object"]
+      }
+    }
+  },
+  "additionalProperties": false
+}

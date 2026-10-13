@@ -1,0 +1,44 @@
+site_id: SITE-0007
+name: "Eagle Ridge Complex Slide"
+region: R01
+slope_unit_id: SU-R01-000123
+mechanism: deep_seated
+tier: TIER_A
+owner: "Lead Geotechnical Engineer - Regional Ops"
+created_at: "2026-09-01T00:00:00Z"
+
+coordinates:
+  latitude: 46.1245
+  longitude: 8.5213
+  elevation_m: 1140.0
+movement_direction_deg:
+  trend_azimuth_deg: 135.0  # Southeast downslope direction
+  plunge_dip_deg: 28.0
+
+sensors:
+  reference:
+    - sensor_id: GNSS-01
+      type: GNSS_STATIC_BASE
+      location: "Bedrock ridge summit (Stable outside moving mass)"
+  primary:
+    - sensor_id: GNSS-02
+      type: GNSS_KINEMATIC_ROVER
+      channel: gnss_enu
+      location: "Active crown bench"
+    - sensor_id: EXT-01
+      type: WIRE_EXTENSOMETER
+      channel: displacement_mm
+      location: "Main headscarp fracture"
+  corroborating:
+    - sensor_id: PZ-01
+      type: VIBRATING_WIRE_PIEZOMETER
+      channel: pore_pressure_kpa
+      depth_m: 24.5
+      shear_zone_depth_m: 22.0
+    - sensor_id: TILT-01
+      type: BIAXIAL_TILTMETER
+      channel: tilt_deg
+      location: "Toe bench block"
+    - sensor_id: RAIN-01
+      type: TIPPING_BUCKET_GAUGE
+      channel: rain_mm

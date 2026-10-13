@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://landslide-ewp.org/contracts/telemetry_message.schema.json",
+  "title": "TelemetryMessage",
+  "description": "Standardized field telemetry message delivered via MQTT from in-situ loggers to Phase 2A.",
+  "type": "object",
+  "required": [
+    "ts",
+    "site_id",
+    "sensor_id",
+    "channel",
+    "values",
+    "quality",
+    "battery_v",
+    "seq"
+  ],
+  "properties": {
+    "ts": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 UTC timestamp of the measurement"
+    },
+    "site_id": {
+      "type": "string",
+      "pattern": "^SITE-[0-9]{4,}$",
+      "description": "Unique site identifier, e.g. SITE-0007"
+    },
+    "sensor_id": {
+      "type": "string",
+      "description": "Sensor identifier, e.g. GNSS-02, PZ-01, EXT-01"
+    },
+    "channel": {
+      "type": "string",
+      "description": "Channel name, e.g. gnss_enu, pore_pressure_kpa, displacement_mm, tilt_deg"
+    },
+    "values": {
+      "type": "object",
+      "description": "Channel-specific physical measurement values",
+      "additionalProperties": {
+        "type": "number"
+      }
+    },
+    "sigma": {
+      "type": "object",
+      "description": "Measurement uncertainties (1-sigma)",
+      "additionalProperties": {
+        "type": "number"
+      }
+    },
+    "quality": {
+      "type": "string",
+      "enum": ["OK", "DEGRADED", "BAD"],
+      "description": "Sensor-level data quality indicator"
+    },
+    "battery_v": {
+      "type": "number",
+      "minimum": 0.0,
+      "description": "Logger battery voltage in Volts"
+    },
+    "temperature_c": {
+      "type": "number",
+      "description": "Logger or sensor ambient temperature in Celsius"
+    },
+    "seq": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Monotonically increasing sequence number from logger"
+    }
+  },
+  "additionalProperties": false
+}

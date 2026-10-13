@@ -1,0 +1,41 @@
+site: SITE-0007
+mechanism: deep_seated
+threshold_version: th-2026-09-01
+signed_off_by: "Chief Geotechnical Engineer"
+
+sensors:
+  primary:
+    - GNSS-02
+    - EXT-01
+  corroborating:
+    - PZ-01
+    - TILT-01
+    - RAIN-01
+
+noise_floor:
+  gnss_h_mm: 2.0
+  gnss_v_mm: 4.0
+  ext_mm: 0.5
+  v_mm_day: 1.5
+  pz_kpa: 2.0
+
+levels:
+  advisory:
+    v_downslope_mm_day: 4.5  # 3 * noise_v
+    persist_h: 2.0
+    rain_id_class_trigger: EXCEEDED
+  warning:
+    v_downslope_mm_day: 10.0
+    persist_h: 1.0
+    corroboration_min_sensors: 2
+    piezo_head_increase_m: 5.0
+  critical:
+    v_downslope_mm_day: 50.0
+    ivm_time_to_failure_max_h: 48.0
+    piezo_head_increase_m: 10.0
+    requires_expert_review: true
+
+de_escalation:
+  persist_below_advisory_h: 72.0
+  require_rain_normal: true
+  verification_required: drone_or_field

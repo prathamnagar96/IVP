@@ -1,0 +1,14 @@
+sla:
+  expert_review_min: 15
+  authority_decision_min: null
+  broadcast_min: null
+local_actuation:
+  enabled: false
+cap:
+  sender: ewp@example.org
+  languages: [en]
+  channels:
+    critical: [cell_broadcast, sms, sirens]
+    warning: [sms, radio]
+deescalation:
+  step_down_one_level: true

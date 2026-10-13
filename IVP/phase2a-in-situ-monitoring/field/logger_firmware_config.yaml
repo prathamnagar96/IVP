@@ -1,0 +1,47 @@
+logger:
+  model: CR6_WIFI_CELL
+  firmware_version: "OS.08.02"
+  telemetry:
+    protocol: MQTT
+    qos: 1
+    broker_host: "mqtt.landslide-ewp.org"
+    broker_port: 8883
+    tls: true
+    topic_template: "ewp/{region}/{site_id}/{sensor_id}/{channel}"
+    heartbeat_interval_sec: 60
+    local_buffer_days: 30
+    retry_backoff_sec: 15
+    max_retry_backoff_sec: 300
+
+power_management:
+  battery_nominal_v: 12.0
+  solar_panel_watts: 100
+  low_battery_warning_v: 11.8
+  cutoff_v: 11.2
+  reconnect_v: 12.4
+
+channels:
+  - sensor_id: GNSS-01
+    type: GNSS_STATIC_REF
+    interval_sec: 30
+    channel_name: gnss_enu
+  - sensor_id: GNSS-02
+    type: GNSS_KINEMATIC
+    interval_sec: 10
+    channel_name: gnss_enu
+  - sensor_id: PZ-01
+    type: VIBRATING_WIRE_PIEZOMETER
+    interval_sec: 60
+    channel_name: pore_pressure_kpa
+  - sensor_id: EXT-01
+    type: WIRE_EXTENSOMETER
+    interval_sec: 10
+    channel_name: displacement_mm
+  - sensor_id: TILT-01
+    type: BIAXIAL_TILTMETER
+    interval_sec: 30
+    channel_name: tilt_deg
+  - sensor_id: RAIN-01
+    type: TIPPING_BUCKET
+    interval_sec: 60
+    channel_name: rain_mm

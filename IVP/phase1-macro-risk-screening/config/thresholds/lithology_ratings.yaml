@@ -1,0 +1,41 @@
+version: "2026-10-v1"
+author: "Engineering Geology Expert Team"
+signed_off: true
+default_rating: 0.50
+
+units:
+  granite_massive:
+    rating: 0.15
+    friction_angle_deg: 40.0
+    cohesion_kpa: 120.0
+    description: "Massive crystalline granite/gneiss with low jointing"
+  limestone_bedded:
+    rating: 0.45
+    friction_angle_deg: 32.0
+    cohesion_kpa: 45.0
+    description: "Well-bedded limestone with karstic cavities"
+  sandstone_interbedded:
+    rating: 0.55
+    friction_angle_deg: 30.0
+    cohesion_kpa: 35.0
+    description: "Sandstone interbedded with shale/siltstone"
+  shale_claystone:
+    rating: 0.85
+    friction_angle_deg: 22.0
+    cohesion_kpa: 15.0
+    description: "Weak fissile shale, mudstone, and swelling claystone"
+  schist_weathered:
+    rating: 0.80
+    friction_angle_deg: 24.0
+    cohesion_kpa: 20.0
+    description: "Highly weathered foliate schist / phyllite"
+  unconsolidated_colluvium:
+    rating: 0.90
+    friction_angle_deg: 26.0
+    cohesion_kpa: 5.0
+    description: "Quaternary scree, talus, and relic landslide colluvium"
+  alluvium_fluvial:
+    rating: 0.25
+    friction_angle_deg: 28.0
+    cohesion_kpa: 10.0
+    description: "Valley bottom terrace deposits and floodplain alluvium"

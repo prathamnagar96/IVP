@@ -1,0 +1,18 @@
+version: "2026-10-v1"
+planar_sliding:
+  max_dip_difference_deg: 20.0
+  min_joint_dip_deg: 15.0
+  description: "Markland test: Joint daylighting where dip < slope dip and dip direction within +/- 20 deg of slope aspect"
+
+toppling:
+  max_strike_difference_deg: 30.0
+  min_steepness_deg: 60.0
+  description: "Goodman & Bray test for flexural and direct toppling"
+
+wedge_sliding:
+  intersection_tolerance_deg: 20.0
+  description: "Hoek & Bray wedge plunge condition daylighting on slope face"
+
+default_friction_angle_deg: 30.0
+min_attitude_measurements_for_ok: 5
+min_attitude_measurements_for_degraded: 1

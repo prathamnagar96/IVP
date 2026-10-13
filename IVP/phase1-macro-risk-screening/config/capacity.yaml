@@ -1,0 +1,29 @@
+drone:
+  daily_flight_hours: 6
+  missions_per_day: 4
+  baseline_mission_days: 14
+  event_response_hours: 24
+
+instrumentation:
+  gnss_stations_available: 15
+  tiltmeters_available: 30
+  piezometers_available: 25
+  installation_lead_time_days: 60
+  maintenance_cycle_days: 90
+
+processing:
+  insar_monthly_scenes: 120
+  max_parallel_insar_jobs: 4
+  rain_fusion_hourly: true
+  optical_tile_daily: 500
+
+queue_limits:
+  INSTRUMENT: 20
+  DRONE_BASELINE: 50
+  RESCREEN: 100
+  AUDIT: 100
+
+budget:
+  annual_drone_hours: 1500
+  annual_insar_processing_hours: 2000
+  annual_field_days: 200

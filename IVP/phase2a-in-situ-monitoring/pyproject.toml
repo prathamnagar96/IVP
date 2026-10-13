@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ewp-phase2a-in-situ-monitoring"
+version = "1.0.0"
+description = "Phase 2A Continuous In-Situ Monitoring & Early-Warning Engine"
+authors = [{name = "Antigravity Engineering"}]
+requires-python = ">=3.10"
+dependencies = [
+    "numpy>=1.24",
+    "scipy>=1.10",
+    "pydantic>=2.0",
+    "pyyaml>=6.0",
+    "jsonschema>=4.17",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+addopts = "-v --strict-markers"
